@@ -11,6 +11,7 @@ var springBootVersion = "2.5.6"
 var springDependencyManagement = "1.0.3.RELEASE"
 var mockitoKotlinVersion = "4.8.0"
 var springFoxVersion = "3.0.0"
+var allureVersion = "2.20.1"
 
 buildscript {
 	var kotlinVersion: String? by extra; kotlinVersion = "1.1.51"
@@ -94,8 +95,9 @@ dependencies {
 	testImplementation("org.junit.platform:junit-platform-runner:1.8.0-M1")
 
 // https://mvnrepository.com/artifact/io.qameta.allure/allure-junit5
-	testImplementation("io.qameta.allure:allure-junit5:2.27.0")
+	testImplementation("io.qameta.allure:allure-junit5:$allureVersion")
 	testImplementation("io.rest-assured:kotlin-extensions:5.4.0")
+	implementation("io.qameta.allure:allure-rest-assured:$allureVersion")
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
@@ -105,6 +107,7 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<Test> {
+	allureConfig
 	useJUnitPlatform()
 	// Show test log
 	testLogging {
@@ -138,5 +141,16 @@ publishing {
 				password = System.getenv("NEXUS_CRED_PSW")
 			}
 		}
+	}
+}
+
+val allureConfig = allure {
+	configuration = "testImplementation"
+	version = allureVersion
+	autoconfigure = true
+	aspectjweaver = true
+	clean = true
+	useJUnit5 {
+		version = allureVersion
 	}
 }
