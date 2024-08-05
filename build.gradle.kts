@@ -109,6 +109,7 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	allureConfig
 	useJUnitPlatform()
+	outputs.upToDateWhen { false } // always rerun tests
 	// Show test log
 	testLogging {
 //        events("standardOut", "started", "passed", "skipped", "failed")
