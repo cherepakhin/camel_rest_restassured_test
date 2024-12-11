@@ -33,10 +33,17 @@ tasks.withType<Test> {
 }
 ````
 
-Просмотр Allure отчета от тестировании:
+Просмотр Allure отчета о тестировании:
 
 ````shell
 ./gradlew alluServe
 ````
 
 ![allure report](doc/allure_report.png)
+
+Запуск тестов в offline режиме:
+
+````shell
+./gradlew --offline test
+````
+
