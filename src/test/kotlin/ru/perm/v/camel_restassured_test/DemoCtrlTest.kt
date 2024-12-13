@@ -7,8 +7,6 @@ import org.hamcrest.core.IsEqual
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.server.ResponseStatusException
 import kotlin.test.assertEquals
 
 @DisplayName("DemoCtrl tests")
