@@ -7,24 +7,26 @@ import org.hamcrest.core.IsEqual
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.server.ResponseStatusException
 import kotlin.test.assertEquals
 
-@DisplayName("EchoCtrl tests")
-class EchoCtrlTest {
+@DisplayName("DemoCtrl tests")
+class DemoCtrlTest {
     @BeforeEach
     fun setup() {
         RestAssured.baseURI = CONSTS.HOST
     }
 
     @Test
-    @DisplayName("GET Hello World REST Request is status=200")
+    @DisplayName("GET REST Request is status=200")
     fun getHelloWorldHttpStatusIsOK() {
-        given().`when`().get("/camel/echo/message").then()
+        given().`when`().get("/demo/message").then()
             .statusCode(HttpStatus.SC_OK)
     }
 
     @Test
-    @DisplayName("GET Hello World REST Request check response")
+    @DisplayName("GET /demo Request is OK and response OK")
     fun getHelloWorldHttpCheckResponse() {
         given().`when`().get("/demo/message").then()
             .statusCode(HttpStatus.SC_OK)
@@ -32,17 +34,38 @@ class EchoCtrlTest {
     }
 
     @Test
-    @DisplayName("GET REST /echo Request with EMPTY message. Check response status.")
+    @DisplayName("GET REST /demo Request with EMPTY message. Check response status.")
     fun getForEmptyCheckResponseStatus() {
         given().`when`().get("/demo/e").then()
             .statusCode(HttpStatus.SC_BAD_GATEWAY)
     }
 
     @Test
-    @DisplayName("GET REST /echo Request with EMPTY message. Check response message.")
+    @DisplayName("GET REST /demo Request with EMPTY message. Check response message.")
     fun getForEmptyCheckResponseMessage() {
-        given().`when`().get("/demo/e").then()
-            .statusCode(HttpStatus.SC_BAD_GATEWAY)
+        val response = given().`when`().get("/demo/e")
+
+        println("-------------response.body--------------")
+        println(response.body)
+        println("---------------------------")
+
+        println("-------------response.body.print()--------------")
+        println(response.body.print())
+        println("---------------------------")
+
+        println("-------------response.body.jsonPath()--------------")
+        println(response.body.jsonPath().getString("message"))
+        println("---------------------------")
+
+        println("-------------response.statusLine--------------")
+        println(response.statusLine)
+        println("---------------------------")
+
+        println("-------------response.headers()--------------")
+        println(response.headers())
+        println("---------------------------")
+
+        assertEquals("Message empty.", response.body.jsonPath().getString("message"))
     }
 
     @Test
@@ -61,5 +84,4 @@ class EchoCtrlTest {
         assertEquals(502, response.statusCode())
         assertEquals("HTTP/1.1 502 ", response.statusLine())
     }
-
 }
