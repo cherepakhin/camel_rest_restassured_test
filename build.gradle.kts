@@ -81,6 +81,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-jetty") // jetty uses less memory
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("com.jayway.jsonpath:json-path:2.9.0")
 
 	kapt("jakarta.annotation:jakarta.annotation-api")
 
