@@ -56,8 +56,8 @@ class EchoCtrlTest {
     fun getForEmptyWithEndSlashCheckErrorMessage() {
         val response = given().`when`().get("/echo/")
         val json=response.body().print()
-        val ctx: ReadContext = JsonPath.parse(json)
-        val errorMessage = ctx.read<String>("$.message")
+        val context: ReadContext = JsonPath.parse(json)
+        val errorMessage = context.read<String>("$.message")
 
         assertEquals("Message empty.", errorMessage)
     }

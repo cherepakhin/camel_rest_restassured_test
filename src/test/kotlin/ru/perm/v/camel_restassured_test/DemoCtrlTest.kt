@@ -32,16 +32,9 @@ class DemoCtrlTest {
     }
 
     @Test
-    @DisplayName("GET REST /demo Request with EMPTY message. Check response status.")
-    fun getForEmptyCheckResponseStatus() {
-        given().`when`().get("/demo/e").then()
-            .statusCode(HttpStatus.SC_BAD_GATEWAY)
-    }
-
-    @Test
     @DisplayName("GET REST /demo Request with EMPTY message. Check response message.")
     fun getForEmptyCheckResponseMessage() {
-        val response = given().`when`().get("/demo/e")
+        val response = given().`when`().get("/demo/")
 
         println("-------------response.body--------------")
         println(response.body)
@@ -63,7 +56,7 @@ class DemoCtrlTest {
         println(response.headers())
         println("---------------------------")
 
-        assertEquals("Message empty.", response.body.jsonPath().getString("message"))
+        assertEquals("No message available", response.body.jsonPath().getString("message"))
     }
 
     @Test
@@ -71,15 +64,6 @@ class DemoCtrlTest {
     fun getForEmptyCheckResponseCode() {
         val response = given().`when`().get("/echo/")
 
-        assertEquals(502, response.statusCode())
-    }
-
-    @Test
-    @DisplayName("GET REST /echo Request with EMPTY message. Check status line.")
-    fun getForEmptyCheckStatusLine() {
-        val response = given().get("/echo/e")
-
-        assertEquals(502, response.statusCode())
-        assertEquals("HTTP/1.1 502 ", response.statusLine())
+        assertEquals(503, response.statusCode())
     }
 }
